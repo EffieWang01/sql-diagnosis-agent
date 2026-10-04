@@ -1,0 +1,29 @@
+# WorkBuddy 项目数据（本地记忆/技能，不入库）
+.workbuddy-ai/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# 数据与产物
+data/raw/
+outputs/
+*.duckdb
+*.db
+*.parquet
+
+# 编辑器 / 系统
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# 临时文件
+*.tmp
+tmp/
