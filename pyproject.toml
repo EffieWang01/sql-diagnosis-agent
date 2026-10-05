@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sqlagent"
+version = "0.1.0"
+description = "面向业务诊断的多轮 SQL 数据分析 Agent"
+requires-python = ">=3.11"
+
+dependencies = [
+    "duckdb>=1.1.0",
+    "pandas>=2.2.0",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+# 训练/推理相关，只在服务器上装
+train = [
+    "torch>=2.5.1",
+    "transformers>=5.18.0",
+    "peft>=0.21.0",
+    "accelerate>=1.15.0",
+    "bitsandbytes>=0.50.0",
+    "datasets>=5.0.0",
+    "trl>=1.14.0",
+]
+dev = [
+    "pytest>=8.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+# 把 pytest 临时目录放在项目内：部分受限环境（沙箱/无权限的 AppData\Local\Temp）
+# 下 pytest 默认的 tmp 目录无法扫描，会导致全部用例 ERROR。
+addopts = "--basetemp=.pytest_tmp"

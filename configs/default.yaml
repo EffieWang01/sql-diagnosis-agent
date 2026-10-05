@@ -1,0 +1,50 @@
+# 数据库助手 — 默认配置
+# 所有可调参数集中于此，代码中不写死魔法数字。
+
+paths:
+  data_dir: data
+  raw_dir: data/raw
+  db_dir: data/db
+  context_dir: data/context
+  outputs_dir: outputs
+  tasks_dir: data/tasks
+
+sandbox:
+  max_rows: 50
+  timeout_s: 15.0
+  allowed_statements: [SELECT, WITH, DESCRIBE, SUMMARIZE, EXPLAIN, SHOW, FROM, VALUES]
+  forbidden_keywords:
+    [INSERT, UPDATE, DELETE, DROP, CREATE, ALTER, TRUNCATE, ATTACH, DETACH,
+     COPY, EXPORT, IMPORT, INSTALL, LOAD, CALL, PRAGMA, SET, BEGIN, COMMIT,
+     ROLLBACK, VACUUM]
+  forbidden_functions:
+    [read_csv, read_parquet, read_json, read_csv_auto, read_text, read_blob,
+     glob, httpfs, install, load]
+
+agent:
+  max_turns: 10
+  max_sql_calls: 8
+  max_context_calls: 3
+  force_finish_on_budget: true
+  max_chars: 60000
+  observation_max_chars: 2000
+
+model:
+  model_path: /root/autodl-tmp/models/Qwen3.5-4B
+  enable_thinking: false
+  max_new_tokens: 512
+  temperature: 0.7
+  top_p: 0.95
+  load_in_4bit_for_training: true
+  use_cache: true
+
+reward:
+  w_final_diagnosis: 0.55
+  w_key_numbers: 0.20
+  w_evidence: 0.15
+  w_recovery: 0.10
+  p_illegal_sql: -0.03
+  p_duplicate_sql: -0.02
+  p_over_budget: -0.10
+  numeric_rtol: 0.01
+  duplicate_similarity: 0.95
